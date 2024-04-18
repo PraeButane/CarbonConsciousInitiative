@@ -26,34 +26,49 @@
     </div>
 
     <div class="nav-bar">
-        <a href="index.html">About</a>
+        <a href="main.html">About</a>
         <a href="schools.html">Schools</a>
         <a href="about.html">DEMO</a>
     </div>
 
-    <div class="dropdown-container">
-        <div class="dropdown-column">
-            <label for="building-selector1">Select a Building:</label>
-            <select id="building-selector1" onchange="updateGraphs()">
-                {% for building in buildings %}
-                <option value="{{ building.id }}">{{ building.name }}</option>
-                {% endfor %}
-            </select>
-            <div id="graph-container1" class="graph-container"></div>
+    <body>
+        <div class="dropdown-container">
+            <div class="dropdown-column">
+                <label for="building-selector1">Select a Building:</label>
+                <select id="building-selector1" onchange="updateGraphs()"></select>
+                <div id="graph-container1" class="graph-container"></div>
+            </div>
+            <div class="dropdown-column">
+                <label for="building-selector2">Select another Building:</label>
+                <select id="building-selector2" onchange="updateGraphs()"></select>
+                <div id="graph-container2" class="graph-container"></div>
+            </div>
         </div>
-        <div class="dropdown-column">
-            <label for="building-selector2">Select another Building:</label>
-            <select id="building-selector2" onchange="updateGraphs()">
-                {% for building in buildings %}
-                <option value="{{ building.id }}">{{ building.name }}</option>
-                {% endfor %}
-            </select>
-            <div id="graph-container2" class="graph-container"></div>      
-        </div>
-    </div>
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('C:\Users\jayca\Documents\hope\CCI Website Local\Data\mydata.json')  // Adjust 'buildings.json' to the path where your JSON file is stored
+                .then(response => response.json())
+                .then(data => {
+                    const selector1 = document.getElementById('building-selector1');
+                    const selector2 = document.getElementById('building-selector2');
+                    data.forEach(building => {
+                        let option = new Option(building.name, building.id);
+                        selector1.add(option.cloneNode(true));  // CloneNode to add the same option to both selectors
+                        selector2.add(option);
+                    });
+                })
+                .catch(error => console.error('Error loading buildings:', error));
+        });
+
+        function updateGraphs() {
+            const buildingId1 = document.getElementById('building-selector1').value;
+            const buildingId2 = document.getElementById('building-selector2').value;
+            console.log('Selected Building 1 ID:', buildingId1);
+            console.log('Selected Building 2 ID:', buildingId2);
+            // Add more functionality to update graphs based on selected building IDs
+        }
         // This assumes all building data is stored in a single JSON file called 'building-data.json'.
         var allBuildingData = [];
     
