@@ -91,46 +91,52 @@
             });
         }
     
-        async function updateGraphs() {
-            const buildingId1 = document.getElementById('building-selector1').value;
-            const buildingId2 = document.getElementById('building-selector2').value;
-    
-            // Filter data for both buildings
-            const data1 = allBuildingData.filter(building => building.id === buildingId1);
-            const data2 = allBuildingData.filter(building => building.id === buildingId2);
-    
-            // Assume data1 and data2 are arrays of { month: 'Jan', year: 2020, value: 100 } objects
-    
-            const maxYValue = Math.max(
-                ...data1.map(item => item.value),
-                ...data2.map(item => item.value)
-            );
-    
-            const layout = {
-                title: 'Building Energy Consumption',
-                barmode: 'group',
-                yaxis: { range: [0, maxYValue] }
-            };
-    
-            const trace1 = {
-                x: data1.map(item => item.month + ' ' + item.year),
-                y: data1.map(item => item.value),
-                type: 'bar',
-                name: 'Building 1'
-            };
-    
-            Plotly.newPlot('graph-container1', [trace1], layout);
-    
-            const trace2 = {
-                x: data2.map(item => item.month + ' ' + item.year),
-                y: data2.map(item => item.value),
-                type: 'bar',
-                name: 'Building 2'
-            };
-    
-            Plotly.newPlot('graph-container2', [trace2], layout);
-        }
-    </script>
+function updateGraphs() {
+    const buildingId1 = document.getElementById('building-selector1').value;
+    const buildingId2 = document.getElementById('building-selector2').value;
+
+    // Assuming buildingId1 and buildingId2 are indexes or some identifiers you can use to get data directly.
+    const buildingData1 = allBuildingData.find(building => building.name === buildingId1).yearlyData;
+    const buildingData2 = allBuildingData.find(building => building.name === buildingId2).yearlyData;
+
+    const traces1 = buildingData1.map(yearData => {
+        return {
+            x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            y: [yearData['1'], yearData['2'], yearData['3'], yearData['4'], yearData['5'], yearData['6'], yearData['7'], yearData['8'], yearData['9'], yearData['10'], yearData['11'], yearData['12']],
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: 'Year ' + yearData.year
+        };
+    });
+
+    const traces2 = buildingData2.map(yearData => {
+        return {
+            x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            y: [yearData['1'], yearData['2'], yearData['3'], yearData['4'], yearData['5'], yearData['6'], yearData['7'], yearData['8'], yearData['9'], yearData['10'], yearData['11'], yearData['12']],
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: 'Year ' + yearData.year
+        };
+    });
+
+    const layout = {
+        title: 'Monthly Energy Consumption',
+        xaxis: {
+            title: 'Month'
+        },
+        yaxis: {
+            title: 'Energy Consumption (kWh)'
+        },
+        showlegend: true
+    };
+
+    // Plotting the data for the first building selector
+    Plotly.newPlot('graph-container1', traces1, layout);
+
+    // Plotting the data for the second building selector
+    Plotly.newPlot('graph-container2', traces2, layout);
+}
+ </script>
     
 </body>
 </html>
