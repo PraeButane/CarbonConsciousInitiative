@@ -1,0 +1,365 @@
+
+/*javascript - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+#plot {
+    width: 50%; /* Make the graph fill the container */
+    height: 100%; /* Make the graph fill the container */
+}
+
+/*html - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+body { 
+    font-family: Arial, sans-serif; 
+    margin: 0; 
+    padding: 0;
+    background-color: rgb(196, 196, 196);
+ }
+.header-title { 
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 3;
+    text-align: center;
+    color: white; 
+    text-shadow: 4px 4px 4px black; 
+    font-size: 50px; 
+}
+.nav-bar { 
+    background-color: black; 
+    overflow: hidden; 
+    display: flex;
+    justify-content: center;
+}
+
+.nav-bar a { 
+    display: block; 
+    color: white; 
+    text-align: center; 
+    padding: 14px 20px; 
+    text-decoration: none; 
+}
+.nav-bar a:hover { 
+    background-color: #ddd; 
+    color: black; 
+}
+.container { 
+    padding: 20px; 
+}
+h2 {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 60px;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+/*
+Box List for University profiles 
+*/
+
+.divider {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: rgb(134, 134, 134);
+}
+
+
+
+.box-div-text {
+    display: inline-block;
+    padding: 0 10px;
+    text-align: center;
+    font-size: 30px;
+    margin-top: 0px;
+    margin-bottom: 15px;
+
+    color: grey;
+}
+.box-list {
+    margin: 0 auto;
+    max-width: 800px; /* Adjust based on your design */
+    border: 20xp solid #ddd;
+    padding: 10px;
+
+}
+
+.box {
+    background-color: #ddd; /* Light grey background */
+    border: 1px solid #ddd; /* Add a slight border */
+    margin-bottom: 20px; /* Space between boxes */
+    padding: 20px; /* Padding inside the boxes */
+    border-radius: 5px; /* Optional: Rounded corners */
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Center align items vertically */
+    box-shadow: #2d1a1a;
+    position: relative;
+}
+
+.box .icon {
+    width: 130px; /* Width of the icon */
+    height: 130px; /* Height of the icon */
+    margin-right: 20px; /* Spacing between icon and content */
+    object-fit: cover;
+}
+.box .smallicon {
+    position: absolute; /* Set position to absolute */
+    bottom: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    width: 30px; /* Width of the icon */
+    height: 30px; /* Height of the icon */
+}
+
+.box .content {
+    flex: 1; /* Grow to fill remaining space */
+}
+
+.box h3 {
+    margin-top: 0;
+    margin-bottom: 0px;
+    color: #333; /* Dark text color for the title */
+    font-size: 30px;
+}
+
+.box p {
+    margin-top: 0;
+    color: #666; /* Lighter text color for the description */
+
+}
+
+.box a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #007bff; /* Link color */
+    text-decoration: none; /* Optional: remove underline */
+}
+
+
+
+/*
+Graph PLOTLY css
+*/
+.graph-container {
+    width: 80%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solidblack#ccc;
+    padding: 20px;
+    position: relative;
+    
+}
+
+/*
+Animated Top
+*/
+.ribbon-container {
+    position: relative;
+    background-color: #2d1a1a;
+    overflow: hidden; 
+    height: 200px;
+    width: 100%;
+}
+.ribbon {
+    position: absolute; 
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+
+}
+.ribbon.ribbon-fast1 {
+    z-index: 2;
+    animation: ribbonMove 120s linear infinite;    
+    background-image: url(https://cdn.discordapp.com/attachments/1222593112258383953/1222745816851283988/co2_less_desne_large.png?ex=6629cac8&is=661755c8&hm=755f804f6849ff9779a72823a089bdd4a6714da40f0531efb6a8cd8595c707f4&); 
+}
+.ribbon.ribbon-fast2 {
+    z-index: 4;
+    animation: ribbonMove 60s linear infinite;
+    background-image: url(https://cdn.discordapp.com/attachments/1222593112258383953/1222940731774206094/carbon_tess_foreground.png?ex=662a804f&is=66180b4f&hm=a96bb0c50ade95cd6a70f154803984a1ebea43594a12f68de26cebe3ce187dca&);
+}
+
+.ribbon.ribbon-slow1 {
+    z-index: 1;
+    animation: ribbonMove 240s linear infinite;
+    background-image: url(https://cdn.discordapp.com/attachments/1222593112258383953/1222746204518092810/co2_less_dense_small.png?ex=6629cb24&is=66175624&hm=89ff439249f2476950c2da122a4c53e5fbcea6dbd7db4d18c4a3cc53d2257e90&); 
+}
+
+@keyframes ribbonMove {
+    from {
+        background-position: 100%;
+    }
+    to {
+        background-position: 200%;
+    }
+}
+
+.tessellation {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0; 
+    width: 100%;
+    height: 100%;
+    background-image: url(https://cdn.discordapp.com/attachments/1222593112258383953/1222608482457489448/co2_tess.png?ex=6616d5e1&is=660460e1&hm=fe2f41ec15eb407d1c248e31d1982eddc29493e20a362068cf97ed9fed9f29b0&);
+    background-size: cover;
+}
+
+.foreground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(https://cdn.discordapp.com/attachments/1222593112258383953/1222608482457489448/co2_tess.png?ex=6616d5e1&is=660460e1&hm=fe2f41ec15eb407d1c248e31d1982eddc29493e20a362068cf97ed9fed9f29b0&);
+    background-size: cover;
+}
+
+/*
+Flex boxes for compare -------------------------------
+*/
+.dropdown-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    gap: 20px; /* Adds space between the columns */
+}
+
+.dropdown-column {
+    flex: 1; /* Each column takes up equal space */
+    background-color: #f4f4f4; /* Light gray background */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+
+.graph-container {
+    width: 90%;
+    height: 500px;
+    background-color: #fff; /* White background for the graph area */
+    border-top: 1px solid #ccc; /* Separator between selector and graph */
+    margin-top: 10px;
+}
+
+select {
+    width: 100%; /* Full width to match the container */
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+/*
+More Compare boxes
+*/
+
+
+
+/*
+Fonts ------------------------------------------------------------- 
+*/
+
+.sixtyfour-googleFontSixtyFour {
+    font-family: "Sixtyfour", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings: "BLED" 0, "SCAN" 0;
+}
+.nova-square-regular {
+    font-family: "Nova Square", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+.museomoderno-googleFontMuseModerno {
+    font-family: "MuseoModerno", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+.anta-regular {
+    font-family: "Anta", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+.alumni-sans-googleFontAlumniSans {
+    font-family: "Alumni Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+.jim-nightshade-regular {
+    font-family: "Jim Nightshade", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+.unifrakturmaguntia-regular {
+    font-family: "UnifrakturMaguntia", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+.rock-salt-regular {
+    font-family: "Rock Salt", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+.sedgwick-ave-display-regular {
+    font-family: "Sedgwick Ave Display", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+.unifrakturcook-bold {
+    font-family: "UnifrakturCook", cursive;
+    font-weight: 700;
+    font-style: normal;
+}
+.odibee-sans-regular {
+    font-family: "Odibee Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+.pirata-one-regular {
+    font-family: "Pirata One", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-size: x-large;
+}
+.six-caps-regular {
+    font-family: "Six Caps", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+.bebas-neue-regular {
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+  
+  
