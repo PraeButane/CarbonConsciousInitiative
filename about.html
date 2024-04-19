@@ -95,7 +95,6 @@ function updateGraphs() {
     const buildingId1 = document.getElementById('building-selector1').value;
     const buildingId2 = document.getElementById('building-selector2').value;
 
-    // Assuming buildingId1 and buildingId2 are indexes or some identifiers you can use to get data directly.
     const buildingData1 = allBuildingData.find(building => building.name === buildingId1).yearlyData;
     const buildingData2 = allBuildingData.find(building => building.name === buildingId2).yearlyData;
 
@@ -119,13 +118,20 @@ function updateGraphs() {
         };
     });
 
+    // Calculate the maximum Y value across both sets of traces for consistent scaling
+    const maxYValue = Math.max(
+        ...traces1.map(trace => Math.max(...trace.y)),
+        ...traces2.map(trace => Math.max(...trace.y))
+    );
+
     const layout = {
         title: 'Monthly Energy Consumption',
         xaxis: {
             title: 'Month'
         },
         yaxis: {
-            title: 'Energy Consumption (kWh)'
+            title: 'Energy Consumption (kWh)',
+            range: [0, maxYValue]  // Set both graphs to have the same Y-axis range
         },
         showlegend: true
     };
@@ -136,6 +142,7 @@ function updateGraphs() {
     // Plotting the data for the second building selector
     Plotly.newPlot('graph-container2', traces2, layout);
 }
+
  </script>
     
 </body>
